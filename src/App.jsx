@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 
 function App() {
@@ -99,6 +99,13 @@ function Notes({ item, setSelectedItem }) {
 }
 
 function Main({ items, setItems, selectedItem }) {
+  const textAreaRef = useRef(null); //declaring a useRef pointing to null
+
+  useEffect(() => {
+    if (textAreaRef.current) textAreaRef.current.focus(); //attaching code to focus on
+    //textarea when the selectedItem state updates
+  }, [selectedItem]);
+
   const handleNoteUpdate = (e) => {
     const updatedItems = [...items];
     updatedItems[selectedItem].text = e.target.value;
@@ -112,6 +119,7 @@ function Main({ items, setItems, selectedItem }) {
       <form action="submit">
         <textarea
           value={items[selectedItem].text ? items[selectedItem].text : " "}
+          ref={textAreaRef} //attaching textarea to textAreaRef
           className="input"
           onChange={handleNoteUpdate}
         />
