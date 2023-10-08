@@ -126,6 +126,11 @@ function Main({ items, setItems, selectedItem }) {
       </form>
     </div>
   );
+  //TODO: adding a theme for the application
+  //TODO: adding a searching feature
+  //TODO: adding profiles login using google account
+  //TODO: saving data to user's google drive using googleapi
+  //TODO: sharing of data saved on drive
 }
 
 export default App;
