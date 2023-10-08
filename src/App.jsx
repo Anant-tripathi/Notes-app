@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
+  /**
+   *
   const [items, setItems] = useState([
     {
       id: 1,
@@ -24,8 +26,28 @@ function App() {
       text: "",
     },
   ]);
+   */
 
-  const [selectedItem, setSelectedItem] = useState(3);
+  const [items, setItems] = useState(() => {
+    const storedItems = localStorage.getItem("items");
+    return storedItems
+      ? JSON.parse(storedItems)
+      : [
+          {
+            id: 1,
+            name: "",
+            text: "",
+          },
+        ];
+    //if there is no data then items is set to one array with blank name and
+    //text fields
+  });
+
+  const [selectedItem, setSelectedItem] = useState(0);
+
+  useEffect(() => {
+    localStorage.setItem("items", JSON.stringify(items));
+  }, [items]);
 
   return (
     <div className="container">
@@ -89,7 +111,7 @@ function Main({ items, setItems, selectedItem }) {
       <h1>Notes App</h1>
       <form action="submit">
         <textarea
-          value={items[selectedItem].text}
+          value={items[selectedItem].text ? items[selectedItem].text : " "}
           className="input"
           onChange={handleNoteUpdate}
         />
